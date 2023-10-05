@@ -1,0 +1,13 @@
+import gradio as gr
+import pandas as pd
+
+def read_df(file,separator,number,number_head):
+    df = pd.read_csv(file.name,sep=separator,  encoding='utf-8')
+    return df.head(number_head) 
+
+iface = gr.Interface(read_df,inputs=[gr.File(type="file",file_types=[".csv"], file_count="single"),
+                                     gr.Text(label="Separator", value=" "),
+                                     gr.Number(label="p-value",value=0.05),
+                                     gr.Number(label="Top N Values",precision=0, value=10)], 
+                     outputs=["dataframe"], allow_flagging='never')
+iface.launch(debug=True)
